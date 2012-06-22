@@ -10,7 +10,7 @@ config = YAML.load_file("../mod_auth_token.yml")
   
 describe ProtectedTokenGenerator do
   before :each do
-    @protected_token = ProtectedTokenGenerator.new('secret', 'path', 'ip_limitation')
+    @protected_token = ProtectedTokenGenerator.new
   end
   
   describe "#new" do
@@ -21,8 +21,12 @@ describe ProtectedTokenGenerator do
     
   describe "#generate_path" do
     it "takes a file name parameter and returns a protected path" do
-      @protected_token = ProtectedTokenGenerator.new(secret, protected_path, ip_limitation)
-      @protected_token.generate_path(filename).should match  /^\/downloads\/[a-fA-F0-9]{32}\/[a-fA-F0-9]{8}\/metallica.jpg$/
+      @new_token = ProtectedTokenGenerator.new
+      @new_token.secret = config[:secret]
+      @new_token.protected_path = config[:protected_path]
+      @new_token.ip_limitation = config[:ip_limitation]
+      @new_token.file_name = filename
+      @new_token.generate_path(filename).should match  /^\/downloads\/[a-fA-F0-9]{32}\/[a-fA-F0-9]{8}\/metallica.jpg$/
     end
   end     
 end
