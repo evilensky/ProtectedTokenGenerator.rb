@@ -5,15 +5,12 @@ class ProtectedTokenGenerator
   attr_accessor :ip_limitation
   attr_reader   :protected_url
   attr_accessor :file_name
-  def initialize #(secret, protected_path, ip_limitation)
-    #@secret
-    #@protected_path = protected_path
-    #@ip_limitation = ip_limitation
+  
+  
+  def initialize
     @hex_time = Time.new.to_i.to_s(16)
-    #@file_name	 = "/"
     @remote_addr = ENV['REMOTE_ADDR']
     @hex_time = Time.new.to_i.to_s(16)
-    #@protected_url = ''
     @token = ''
   end
   
